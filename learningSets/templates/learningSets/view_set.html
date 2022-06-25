@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}{{set.name}} set{% endblock title %}
+{% block content %}
+
+<h1>{{set.name}}</h1>
+{{set.description}}
+
+<ul>
+{% for term in set.question_set.all %}
+<li>{{term.name}} - {{term.definition}}</li>
+{% endfor %}
+</ul>
+
+{% if set.user == request.user %}
+<a href="{% url 'edit_set' set.id %}">Edit</a>
+<div class='delete-button' data-url='{% url "delete_set" set.id %}' data-name='{{set.name}}'>Delete</div>
+{% endif %}
+<script src="{% static 'scripts/script.js' %}"></script>
+{% endblock content %}

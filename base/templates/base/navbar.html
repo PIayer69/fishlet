@@ -1,0 +1,9 @@
+<a href="{% url 'home' %}">Home</a>
+{% if request.user.is_authenticated %}
+Welcome <a href="{% url 'profile' request.user.id %}">{{request.user}}</a> <a href="{% url 'logout' %}">Logout</a>
+<a href="{% url 'create_set' %}">Create set</a>
+{% else %}
+<a href="{% url 'register' %}">Register</a>
+<a href="{% url 'login' %}">Login</a>
+{% endif %}
+<hr>

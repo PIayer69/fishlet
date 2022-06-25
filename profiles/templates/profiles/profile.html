@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+{% block title %}{{user.username}} profile{% endblock title %}
+{% block content %}
+<h1>{{user.username}}</h1>
+<ul>
+{% for set in sets %}
+<li>
+<a href="{% url 'view_set' set.id %}">{{set.name}}</a>
+{% if set.user == request.user %}
+<a href="{% url 'edit_set' set.id %}">Edit</a>
+<a href="{% url 'delete_set' set.id %}">Delete</a>
+{% endif %}
+</li>
+{% endfor %}
+</ul>
+{% endblock content %}

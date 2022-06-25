@@ -1,0 +1,34 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Set creation{% endblock title %}
+{% block content %}
+<form action="" method="POST">
+    {% csrf_token %}
+
+    <input type="text" name='set_name' placeholder='Set name...' required>
+    <input type="text" name='set_description' placeholder='Set description...'>
+
+    <div class='terms'>
+        <p>
+            <input type="text" name="name" placeholder='Term' required>
+            <input type="text" name="def" placeholder='Definition' required>
+            <span data-url="/delete-term/" class='delete-term'>X</span>
+        </p>
+        <p>
+            <input type="text" name="name" placeholder='Term' required>
+            <input type="text" name="def" placeholder='Definition' required>
+            <span data-url="/delete-term/" class='delete-term'>X</span>
+        </p>
+        <p>
+            <input type="text" name="name" placeholder='Term' required>
+            <input type="text" name="def" placeholder='Definition' required>
+            <span data-url="/delete-term/" class='delete-term'>X</span>
+        </p>
+    </div>
+    <button type='button' class='terms-button'>Add terms</button>
+
+    <input type="submit" value='Create'>
+    <a href="{% url 'home' %}">Go back</a>
+</form>
+<script src="{% static 'scripts/script_try.js' %}"></script>
+{% endblock content %}

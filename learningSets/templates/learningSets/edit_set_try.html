@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Editing: {{set.name}}{% endblock title %}
+{% block content %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <input type="text" name='set_name' value="{{set.name}}" required>
+    <input type="text" name='set_description' value="{{set.description}}">
+    <div class='delete-button' data-url='{% url "delete_set" set.id %}' data-name='{{set.name}}'>Delete</div>
+
+    <div class="terms">
+    {% for term in set.question_set.all %}
+        <p>
+            <input type="text" name="name" value="{{term.name}}" placeholder="Term" required>
+            <input type="text" name="def" value="{{term.definition}}" placeholder="Definition" required>
+            <span data-url="{% url 'delete_term' term.id %}" class='delete-term'>X</span>
+        </p>
+    {% endfor %}
+    </div>
+    <button type='button' class='terms-button'>Add terms</button>
+    <input type="submit" value="Save">
+    <a href="{% url 'home' %}">Go back</a>
+</form>
+<div class='status'></div>
+<script src="{% static 'scripts/script_try.js' %}"></script>
+<script src="{% static 'scripts/save.js' %}"></script>
+{% endblock content %}

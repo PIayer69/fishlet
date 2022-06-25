@@ -1,0 +1,18 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Home Page{% endblock title %}
+{% block content %}
+<h1>Home page</h1>
+Sets available: {{sets.count}}
+<hr>
+<h2>Sets:</h2>
+{% for set in sets %}
+<a href="{% url 'view_set' set.id %}">{{set.name}}</a> - by <a href="{% url 'profile' set.user.id %}">{{set.user.username}}</a>
+{% if set.user == request.user %}
+<a href="{% url 'edit_set' set.id %}">Edit</a>
+<span class='delete-button' data-url='{% url "delete_set" set.id %}' data-name='{{set.name}}'>Delete</span>
+{% endif %}
+<hr>
+{% endfor %}
+<script src="{% static 'scripts/script.js' %}"></script>
+{% endblock content %}
