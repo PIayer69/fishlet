@@ -3,8 +3,10 @@
 {% block title %}{{set.name}} set{% endblock title %}
 {% block content %}
 
-<h1>{{set.name}}</h1>
-{{set.description}}
+<h1>{{set.name}}</h1> 
+<p>{{set.description}}</p>
+
+Terms({{set.question_set.all.count}}):
 
 <ul>
 {% for term in set.question_set.all %}

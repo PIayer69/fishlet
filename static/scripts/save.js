@@ -9,10 +9,9 @@ $(document).ready(function(){
     //id - span id
     //q_id - question id in db
     function update_links(id, q_id){
-        console.log($('.terms').find('p')[id-1])
         term = $('.terms').find('p')[id-1].children[2]
         attr = term.getAttribute('data-url')
-        console.log(attr)
+        // console.log(attr)
         if(attr == '/delete-term/'){
             attr = attr + q_id
             term.setAttribute('data-url', attr)

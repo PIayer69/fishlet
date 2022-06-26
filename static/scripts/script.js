@@ -1,51 +1,23 @@
-function update_no_questions(){
-    terms_div = $('.terms')
-    no_questions_input = $('.no_questions_input')
-    no_questions = terms_div.find('p').length
-    no_questions_input.val(no_questions)
-}
-
-function get_no_questions(){
-    terms_div = $('.terms')
-    no_questions = terms_div.find('p').length
-
-    return no_questions
-}
-
-function get_last_term_index(){
-    terms_div = $('.terms')
-    terms = terms_div.find('p')
-    last_term = terms[terms.length - 1]
-    return parseInt(last_term.childNodes[1].getAttribute('name').split('-')[1])
-}
-
 $(document).ready(function(){
-    update_no_questions()
-    no_questions = get_no_questions()
-    last_term_index = no_questions
-
     $('.terms-button').click(function(){
         p = $('<p/>').appendTo('.terms')
         $('<input/>', {
             'type': 'text',
-            'name':`name-${last_term_index + 1}`,
+            'name':`name`,
             'placeholder': 'Term',
             'required': 'True'
         }).appendTo(p)
         $('<input/>', {
             'type': 'text',
-            'name':`def-${last_term_index + 1}`,
+            'name':`def`,
             'placeholder': 'Definition',
             'required': 'True'
         }).appendTo(p)
         $('<span/>', {
             'class': 'delete-term',
-            'id': last_term_index+1,
             'data-url': '/delete-term/',
             'text': 'X'
         }).appendTo(p)
-        last_term_index += 1
-        update_no_questions()
     })
 
 
@@ -57,7 +29,6 @@ $(document).ready(function(){
         term_p = $(this).parent()
         if(url == '/delete-term/'){
             term_p.remove()
-            update_no_questions()
         }
         else{
             $.ajax({
@@ -65,14 +36,12 @@ $(document).ready(function(){
                 type: 'GET',
                 success:function(data, textStatus, jqXHR){
                     term_p.remove()
-                    update_no_questions()
                 },
                 error:function(xhr, status, error){
                     alert('failed')
                 }
             })
         }
-        last_term_index = get_last_term_index()
     })
 
 
