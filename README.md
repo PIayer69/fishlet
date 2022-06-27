@@ -4,11 +4,11 @@ My first real project, done with Django, jQuery, JavaScript, HTML and CSS. Fishl
 
 
 ## To do list:
-[] - Games to make learning more entertaining \
-[] - Frontend \
-[] - Import terms from file \
-[] - Security issues \
-[] - Small fixes 
+[ ] - Games to make learning more entertaining \
+[ ] - Frontend \
+[ ] - Import terms from file \
+[ ] - Security issues \
+[ ] - Small fixes 
 
 ## Ideas:
-[] - Using NLTK to check answers
+[ ] - Using NLTK to check answers
