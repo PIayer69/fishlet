@@ -1,4 +1,7 @@
 $(document).ready(function(){
+    var csrftoken = $.cookie('csrftoken')
+    var document_url = document.location.origin
+
     $('.terms-button').click(function(){
         p = $('<p/>').appendTo('.terms')
         $('<input/>', {
@@ -33,7 +36,8 @@ $(document).ready(function(){
         else{
             $.ajax({
                 url: url,
-                type: 'GET',
+                type: 'POST',
+                headers:{'X-CSRFToken': csrftoken},
                 success:function(data, textStatus, jqXHR){
                     term_p.remove()
                 },
@@ -58,10 +62,9 @@ $(document).ready(function(){
         $('<div/>', {
             'class': 'delete-box-buttons',
         }).appendTo('.delete-box')
-        $('<a/>', {
-            'id':'myDiv',
-            'class':'myClass',
-            'href': url,
+        $('<span/>', {
+            'class':'delete-box-delete-button',
+            'data-url': url,
             'text':`Delete`,
         }).appendTo('.delete-box-buttons');
         $('<div/>', {
@@ -75,5 +78,20 @@ $(document).ready(function(){
         $('.dimmed').remove()
     })
 
+    $(document).on('click', '.delete-box-delete-button', function(){
+        url = $(this).data('url')
+        $.ajax({
+            url: url,
+            type: 'POST',
+            headers:{'X-CSRFToken': csrftoken},
+            success:function(data, textStatus, jqXHR){
+                window.location.replace(document_url)
+            },
+            error:function(xhr, status, error){
+                alert('failed')
+            }
+        })
+        $('.dimmed').remove()
+    })
     
 })

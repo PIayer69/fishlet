@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 
 from .forms import SetForm, QuestionForm
@@ -31,16 +31,16 @@ def create_set(request):
             if key == 'def':
                 definitions = values
 
-        print(no_questions)
+        # print(no_questions)
         set_name = request.POST.get('set_name')
         set_description = request.POST.get('set_description')
 
         new_set = Set.objects.create(user=request.user, name=set_name, description=set_description)
     
-        print(set_name, set_description)
+        # print(set_name, set_description)
 
         for name, definition in zip(names, definitions):
-            print(name, definition)
+            # print(name, definition)
             if not name == definition == None or name == definition == "":
                 Question.objects.create(question_set=new_set, name=name, definition=definition)
         return redirect('view_set', pk=new_set.id)
@@ -56,7 +56,7 @@ def edit_set(request, pk):
 
     if request.method == "POST":
         data = parse_data_from_post(request.POST)
-        print(data)
+        # print(data)
 
         q_set.name = data["set_name"]
         q_set.description = data["set_description"]
@@ -104,22 +104,19 @@ def edit_set(request, pk):
 
 
 def delete_set(request, pk):
-    q_set = Set.objects.get(id=pk)
-    q_set.delete()
-    return redirect('home')
-
-    # if request.method == "POST":
-    #     q_set.delete()
-    #     return redirect('home')
-
-    # return render(request, 'learningSets/delete.html', {'obj': q_set})
+    if request.method == "POST":    
+        q_set = Set.objects.get(id=pk)
+        q_set.delete()
+        return redirect('home')
+    return HttpResponseForbidden('Access denied.')
 
 
 def delete_term(request, pk):
-    term = Question.objects.get(id=pk)
-    term.delete()
-    return HttpResponse('Success')
-
+    if request.method == "POST":
+        term = Question.objects.get(id=pk)
+        term.delete()
+        return HttpResponse('Success')
+    return HttpResponseForbidden('Access denied.')
     
 
 def view_set(request, pk):

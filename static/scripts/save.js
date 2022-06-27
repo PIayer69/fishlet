@@ -13,7 +13,7 @@ $(document).ready(function(){
         attr = term.getAttribute('data-url')
         // console.log(attr)
         if(attr == '/delete-term/'){
-            attr = attr + q_id
+            attr = attr + q_id + '/'
             term.setAttribute('data-url', attr)
         }
     }
